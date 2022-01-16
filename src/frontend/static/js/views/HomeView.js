@@ -1,3 +1,5 @@
+'use strict';
+
 import AbstractView from './AbstractView.js';
 
 export default class extends AbstractView{
@@ -8,7 +10,10 @@ export default class extends AbstractView{
 
     async getHtml(){
         return `
-            <h1>School Manager 홈 화면</h1>
+            <h1>홈 화면</h1>
+            <div id="weather">
+            </div>
+            <script src="../components/weather.js"></script>
         `;
     }
 }

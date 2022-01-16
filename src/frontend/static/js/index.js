@@ -1,3 +1,5 @@
+'use strict';
+
 import HomeView from './views/HomeView.js';
 import CalendarView from './views/CalendarView.js';
 import NotFoundView from './views/NotFoundView.js';
@@ -41,6 +43,8 @@ const router = async ()=>{
 
     document.querySelector('#app').innerHTML=await view.getHtml();
 
+    console.log(matchedPath.route.path);
+
 }
 
 window.addEventListener('popstate',router);
@@ -50,6 +54,10 @@ document.addEventListener('DOMContentLoaded',()=>{
         if(event.target.matches('[data-link]')){
             event.preventDefault();
             navigateTo(event.target.href);
+        }
+        else if(event.target.matches('[data-img]')){
+            event.preventDefault();
+            navigateTo(event.target.attributes.href.nodeValue);
         }
     });
     router();

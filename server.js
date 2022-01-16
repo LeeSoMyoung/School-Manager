@@ -1,3 +1,5 @@
+'use strict';
+
 require('dotenv').config();
 
 const express = require('express');
@@ -7,10 +9,10 @@ const http = require('http').createServer(app);
 
 const PORT = process.env.PORT;
 
-app.use('/static',express.static(path.resolve(__dirname,'frontend','static')));
+app.use('/static',express.static(path.resolve(__dirname,'src','frontend','static')));
 
 app.get('/*', (req,res)=>{
-    res.sendFile(path.resolve('frontend','index.html'));
+    res.sendFile(path.resolve('src','frontend','index.html'));
 });
 
 app.listen(PORT||8081, ()=>{

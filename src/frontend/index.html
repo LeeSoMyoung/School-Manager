@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Manager</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+    <!--왼쪽 사이드바-->
+    <nav class="nav"> 
+        <a href="/calendar" class="nav__link" data-link>
+            <img src="/static/img/calendar.png" class="nav-icon" data-img href="/calendar">
+        </a>
+        <a href="/graduation" class="nav__link" data-link>
+            <img src="/static/img/graduation-hat.png" class="nav-icon" data-img href="/graduation">
+        </a>
+    </nav>
+
+    <!-- SPA View에서 동적으로 채울 공간 -->
+    <div id="app"></div>
+
+    <!-- 오른쪽 사이드바 -->
+    <div class="item closed" id="notification">
+        <div id="notification-icon">
+            <img class="side-bar-open-icon" src="static/img/open.png" width="20px" height="20px">
+        </div>
+    </div>
+    <script type="module" src="/static/js/index.js"></script>
+</body>
+<footer></footer>
+</html>
