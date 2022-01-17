@@ -1,16 +1,14 @@
-'use strict';
-
-import AbstractView from './AbstractView.js';
+import AbstractView from "./AbstractView.js";
 
 export default class extends AbstractView{
     constructor(){
         super();
-        this.setTitle('학사 관리');
+        this.setTitle('학점 관리');
     }
 
     async getHtml(){
         return `
-            <h1>학사 관리</h1>
+            <h1>학점 관리</h1>
         `;
     }
 }

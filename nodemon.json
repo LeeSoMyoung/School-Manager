@@ -1,0 +1,4 @@
+{
+    "ignore": ["src/frontend/*"],
+    "exec": "babel-node server.js"
+  }

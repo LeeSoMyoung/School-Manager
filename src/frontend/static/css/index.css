@@ -3,7 +3,7 @@
 }
 
 body {
-    --nav-width: 80px;
+    --nav-width: 4%;
     margin: 0 0 0 var(--nav-width);
     font-family: 'Quicksand', sans-serif;
     font-size: 18px;
@@ -54,13 +54,16 @@ body {
     border-radius : 0 20px 20px 0 / 0 20px 20px 0;
     border-right : none;
     background : #a9beff;
-    width : 30px;
+    width : 4%;
     color : #a9beff;
+    position: absolute;
+    top: 0px;
+    right:0px;
   }
   
   #notification:hover #notification-icon
   {
-    width : 30px;
+    width : 100%;
     border-radius : 0 20px 20px 0 / 0 20px 20px 0;
     background : #aeaeae;
     height : 100vh;
@@ -69,7 +72,7 @@ body {
   #notification:hover .side-bar-open-icon {
     display : block;
     position:relative;
-    top : 40vh;
+    top : 50%;
   }
   
   #side-bar-icon{

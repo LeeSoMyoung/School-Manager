@@ -3,8 +3,9 @@
 import HomeView from './views/HomeView.js';
 import CalendarView from './views/CalendarView.js';
 import NotFoundView from './views/NotFoundView.js';
-import GraduationView from './views/GraduationView.js';
 import LogInView from './views/LogInView.js';
+import CreditView from './views/CreditView.js';
+import EnrollmentView from './views/EnrollmentView.js';
 
 const navigateTo=(url)=>{
     history.pushState(null,null,url);
@@ -15,8 +16,9 @@ const router = async ()=>{
     const routes=[
         {path:"/", view:HomeView},
         {path:"/calendar", view:CalendarView},
-        {path:"/graduation", view:GraduationView},
         {path:"/login",view:LogInView},
+        {path:"/enrollment", view:EnrollmentView},
+        {path:"/credit", view:CreditView}
     ];
 
     const pathList = routes.map(route=>{
@@ -33,7 +35,7 @@ const router = async ()=>{
         matchedPath = {
             route:{
                 path:location.pathname,
-                view:NotFoundView
+                view:NotFoundView // notFound view를 통해 존재하지 않는 페이지라는 것을 알림
             },
             isMatch:true
         };
