@@ -11,3 +11,5 @@
 |Front-end|Vanilla JS HTML CSS|
 |Back-end| Node.js Express MySQL|
 
+# API 명세서
+<a href="https://ordinary-bait-736.notion.site/API-7c29414135ad400b81abf2944448af94">API 명세서 설계</a>
