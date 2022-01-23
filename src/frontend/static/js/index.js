@@ -6,6 +6,10 @@ import NotFoundView from './views/NotFoundView.js';
 import LogInView from './views/LogInView.js';
 import CreditView from './views/CreditView.js';
 import EnrollmentView from './views/EnrollmentView.js';
+import MonthlyView from './views/MonthlyView.js';
+import WeeklyView from './views/WeeklyView.js';
+
+const pathToRegex = (path)=>new RegExp("^"+path.replace(/\//g, "\\/").replace(/:\w+/g));
 
 const navigateTo=(url)=>{
     history.pushState(null,null,url);
@@ -18,7 +22,9 @@ const router = async ()=>{
         {path:"/calendar", view:CalendarView},
         {path:"/login",view:LogInView},
         {path:"/enrollment", view:EnrollmentView},
-        {path:"/credit", view:CreditView}
+        {path:"/credit", view:CreditView},
+        {path:"/calendar/weekly", view:WeeklyView},
+        {path:"/calendar/monthly", view:MonthlyView}
     ];
 
     const pathList = routes.map(route=>{
@@ -44,6 +50,8 @@ const router = async ()=>{
     const view = new matchedPath.route.view();
 
     document.querySelector('#app').innerHTML=await view.getHtml();
+
+    view.attachEvent();
 
     console.log(matchedPath.route.path);
 

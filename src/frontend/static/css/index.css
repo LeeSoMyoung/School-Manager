@@ -10,8 +10,8 @@ body {
 }
 
 .nav-icon{
-    width: 30px;
-    height: 30px;
+    width: 130%;
+    height: 130%;
     cursor: pointer;
     align-items: center;
 }

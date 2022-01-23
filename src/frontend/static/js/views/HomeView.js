@@ -1,6 +1,7 @@
 'use strict';
 
 import AbstractView from './AbstractView.js';
+//import style from '../../css/style.css';
 
 export default class extends AbstractView{
     constructor(){
@@ -11,9 +12,6 @@ export default class extends AbstractView{
     async getHtml(){
         return `
             <h1>홈 화면</h1>
-            <div id="weather">
-            </div>
-            <script src="../components/weather.js"></script>
         `;
     }
 }
