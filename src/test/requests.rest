@@ -1,0 +1,11 @@
+GET http://localhost:3000/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IuydtOyGjOuqhSIsInB3IjoiMTIzNCIsImlhdCI6MTY0MzAyODAzOX0.ERPAQdGpvB0z-qygRBFF3AnHpvqhP5HObhzkVOSEimk
+###
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "id":"이소명",
+    "pw":"1234"
+}
