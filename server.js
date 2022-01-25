@@ -6,10 +6,11 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const logger = require('morgan');
-const token = require('./src/backend/api/token');
+const {generateAccessToken, authenticationToken} = require('./src/backend/api/token');
 const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT;
+export const WEATHER_API_KEY= process.env.WEATHER_API_KEY;
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,11 +31,11 @@ app.post('/login',(req,res)=>{
    res.json({accessToken:accessToken});
 });
 
-app.get('/login',token.authenticationToken,(req,res)=>{
+app.get('/login',authenticationToken,(req,res)=>{
     res.json({"id":req.user.id});
 });
 
-app.get('/',token.authenticationToken,(req,res)=>{
+app.get('/',authenticationToken,(req,res)=>{
     res.json({"현재 유저의 id":req.user.id});
 });
 

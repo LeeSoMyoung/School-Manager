@@ -11,6 +11,10 @@ export default class{
         return "";
     }
 
+    async getDetails(){
+        
+    }
+
     attachEvent(){
         
     }
