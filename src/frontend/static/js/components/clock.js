@@ -6,34 +6,25 @@ function dayConvert(day){
     return days[day];
 }
 
-function getClock(){
+function getClock(clock){
     // 현재 시각을 얻는 함수
     const now = new Date();
     const min = now.getMinutes();
     const hour = now.getHours();
     const sec = now.getSeconds();
-    const clock={
-        seconds:sec,
-        minutes:min,
-        hours:hour
-    };
-
-    return clock;
+    
+    clock.innerText=`${hour}: ${min}: ${sec}`;
 }
 
-function getToday(){
+function getToday(date_panel){
     const now = new Date();
     const month = now.getMonth()+1;
     const day = dayConvert(now.getDay());
     const date = now.getDate();
     
-    const today = {
-        month: month,
-        date:date,
-        day:day
-    };
+    console.log(month, date, day);
 
-    return today;
+    date_panel.innerText = `${month}. ${date} ${day}`;
 }
 
 export {getClock, getToday};

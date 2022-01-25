@@ -29,22 +29,14 @@ export default class extends AbstractView {
         const date = document.querySelector('#date-panel');
         const greeting = document.querySelector('#greeting-panel');
 
-        const currentTime = getClock();
-        const greet = getGreeting();
-        const today = getToday();
-
-        clock.innerText = `${currentTime.hours}: ${currentTime.minutes}:${currentTime.seconds}`;
-        date.innerText=`${today.month}. ${today.date} ${today.day}`;
-        greeting.innerText=`${greet}`;
+        getClock(clock);
+        getToday(date);
+        getGreeting(greeting);
 
         setInterval(() => {
-            const time = getClock();
-            const now = getToday();
-            const greet_updated = getGreeting();
-
-            clock.innerText = `${time.hours}: ${time.minutes}: ${time.seconds}`;
-            date.innerText=`${now.month}. ${now.date} ${now.day}`;
-            greeting.innerText=`${greet_updated}`;
+            getClock(clock);
+            getToday(date);
+            getGreeting(greeting);
         }, 1000);
     }
 
