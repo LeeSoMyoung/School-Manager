@@ -4,8 +4,7 @@ const USER_NAME = "username";
 
 function loadName() {
     const name = localStorage.getItem(USER_NAME);
-
-    return name; // null일 때 View 쪽에서 예외처리
+    return name;
 
 }
 
@@ -13,25 +12,33 @@ function saveName(name) {
     localStorage.setItem(USER_NAME, name);
 }
 
-function getGreeting(greeting_panel) {
+export default function getGreeting(greeting_panel) {
     const now = new Date();
-    const hours = now.getHours;
+    const hours = now.getHours();
+    const name = loadName();
+
     let greet;
 
-    if (hours >= 6 && hours < 12) {
-        greet = "Good Morning";
-    }
-    else if (hours >= 12 && hours < 17) {
-        greet = "Good Afternoon";
-    }
-    else if (hours >= 17 && hours < 22) {
-        greet = "Good Evening";
+    if (name === null) {
+        // TODO : name이 null이면 이름 저장하는 화면 관련 코드 작성
+
     }
     else {
-        greet = "Good Night";
+        greet = name;
+    }
+
+    if (hours >= 6 && hours < 12) {
+        greet += " Good Morning";
+    }
+    else if (hours >= 12 && hours < 17) {
+        greet += " Good Afternoon";
+    }
+    else if (hours >= 17 && hours < 22) {
+        greet += " Good Evening";
+    }
+    else {
+        greet += " Good Night";
     }
 
     greeting_panel.innerText = greet;
 }
-
-export { loadName, saveName, getGreeting };

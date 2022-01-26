@@ -22,8 +22,6 @@ function getToday(date_panel){
     const day = dayConvert(now.getDay());
     const date = now.getDate();
     
-    console.log(month, date, day);
-
     date_panel.innerText = `${month}. ${date} ${day}`;
 }
 
