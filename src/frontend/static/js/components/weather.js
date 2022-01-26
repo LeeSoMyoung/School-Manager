@@ -1,100 +1,89 @@
 'use strict';
 
-import WEATHER_API_KEY from '../../../../../server.js';
-
 const WEATHER = "weather";
 const GEOLOCATION = "geoloaction";
 
-function getGeolocation(){
-    navigator.geolocation.getCurrentPosition(getWeather,showError);
-}
-
-function weatherError(){
-    // geolocation을 불러오는 데 실패했을 시
-    alert("geolocation을 불러오는데 실패했습니다.");
-}
-
-function getWeather(pos){
-    // geolocation을 불러오는 데 성공했을 시
-    let geoInfo;
-    const info = JSON.parse(localStorage.getItem(GEOLOCATION));
-    console.log(pos);
-    console.log(info);
-
-    if(info!==null){
-        // 로컬스토리지에 이미 저장되어 있는 geolocation 정보가 존재한다면
-        geoInfo = saveGeolocation(pos);
-    }
-    else{
-        geoInfo = saveGeolocation(pos);
-    }
-    
-    fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${geoInfo.lat}&lon=${geoInfo.lon}&appid=${WEATHER_API_KEY}&units=metric`
-    )
-    .then((res)=>{
-        return res.json();
-    })
-    .then((json)=>{
-        return saveWeather(json);
-    })
-}
-
-function saveWeather(json){
-    const weathericon = json.weather[0].icon;
-    const temperature = json.main.temp;
-    const region = json.name;
-    const weatherInfo={
-        icon : ""+weathericon,
-        temperature : ""+temperature+"°C",
-        region : ""+region
-    };
-    //json 데이터로 weather에 저장하기 
-    localStorage.setItem(WEATHER, JSON.stringify(weatherInfo));
-    return weatherInfo;
-}
-
-function saveGeolocation(pos){
-    const lat = pos.coords.latitude;
-    const lon = pos.coords.longitude;
-    const geoinfo={
-        lat : lat,
-        lon : lon
-    };
-    localStorage.setItem(GEOLOC, JSON.stringify(geoinfo));
-    return geoinfo;
-}
-
-function retrial(){
-    localStorage.setItem(WEATHER,null);
-    localStorage.setItem(GEOLOCATION,null);
-    getGeolocation();
-}
-
-function loadGeolocation(){
+function loadGeolocation() {
     return JSON.parse(localStorage.getItem(GEOLOCATION));
 }
 
-function loadWeather(){
-    let weather = JSON.parse(localStorage.getItem(WEATHER));
-    if(weather!==null){
-        return weather;
+function getGeolocation(paintError) {
+    navigator.geolocation.getCurrentPosition(getWeather, paintError);
+}
+
+function retrial(paintError) {
+    localStorage.setItem(WEATHER, null);
+    localStorage.setItem(GEOLOCATION, null);
+    getGeolocation(paintError);
+}
+
+function getWeather(pos) {
+    let geoInfo;
+    const info = JSON.parse(localStorage.getItem(GEOLOCATION));
+
+    if (info !== null) {
+        // 로컬 스토리지에 저장된 위치 정보가 존재한다면
+        geoInfo = info;
     }
-    else{
-        const loc = loadGeolocation();
-        if(loc!==null){
-            // localStorage에 저장되어 있던 geolocation 정보가 있을 시
-            getWeather(null);
+    else {
+        // 저장된 정보가 없으면 현 위치를 저장하고 현 위치를 통해 날씨를 가져오도록 한다.
+        geoInfo = saveGeolocation(pos);
+    }
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${geoInfo.lat}&lon=${geoInfo.lon}&appid=${WEATHER_API_KEY}&units=metric`)
+        .then((res) => {
+            return res.json();
+        })
+        .then((json)=>{
+            saveWeather(json);
+        });
+}
+
+function saveGeolocation(pos) {
+    const lat = pos.coords.latitude;
+    const lon = pos.corrds.longitude;
+    const geoInfo = {
+        lat: lat,
+        lon: lon
+    };
+
+    localStorage.setItem(GEOLOCATION, geoInfo);
+    return geoInfo;
+}
+
+function saveWeather(weatherInfo) {
+    const region = weatherInfo.name;
+    const temperature = weatherInfo.main.temp;
+    const weather_icon = weatherInfo.weather[0].icon;
+
+    const weather = {
+        icon: String(weather_icon),
+        region: region,
+        temperature: String(temperature) + "°C"
+    }
+
+    localStorage.setItem(WEATHER, JSON.stringify(weather));
+
+    return weather;
+}
+
+function loadWeather(paintWeather, paintError) {
+    const current_weather = JSON.parse(localStorage.getItem(WEATHER));
+
+    if (current_weather !== null) {
+        // 현재 날씨가 존재하면
+        paintWeather(current_weather);
+    }
+    else {
+        const location = loadGeolocation();
+
+        if (location !== null) {
+            getWeather(location);
         }
-        else{
-            getGeolocation();
+        else {
+            getGeolocation(paintError);
         }
     }
 }
 
-function showError(){
-    alert('날씨를 불러오지 못했습니다.');
-}
-
-module.exports={getGeolocation, weatherError, getWeather,saveWeather,saveGeolocation,retrial,loadGeolocation,loadWeather};
-export {getGeolocation, weatherError, getWeather,saveWeather,saveGeolocation,retrial,loadGeolocation,loadWeather};
+export { getGeolocation, retrial, loadWeather };

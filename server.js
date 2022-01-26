@@ -10,7 +10,6 @@ const {generateAccessToken, authenticationToken} = require('./src/backend/api/to
 const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT;
-export const WEATHER_API_KEY= process.env.WEATHER_API_KEY;
 
 app.use(logger('dev'));
 app.use(express.json());
