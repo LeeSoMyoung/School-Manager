@@ -1,3 +1,40 @@
 .hidden{
     display: none;
 }
+
+.inner-item{
+    margin-top : 5px;
+    margin-bottom : 0px;
+}
+
+#clock-panel{
+    font-size:9vw;
+    margin-top : 0px;
+    margin-bottom : -26px;
+    display : inline-block;
+}
+
+#date-panel{
+    display : inline-block;
+    font-size : 1.5vw;
+    font-style : italic;
+    margin-top :0px;
+}
+
+#greeting-panel{
+  display :block;
+  font-size : 2.5vw;
+  font-weight :bold;
+}
+
+.weather-init{
+    vertical-align: middle;
+}
+
+#weather-temperature, #weather-region{
+    font-size:20px;
+}
+
+  #weather-item,#weather-error{
+  display:none;
+}

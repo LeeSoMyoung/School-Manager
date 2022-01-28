@@ -5,7 +5,6 @@ import { getClock, getToday } from '../components/clock.js';
 import getGreeting from '../components/greeting.js';
 import { showToDoList, saveToDos } from '../components/todo.js';
 //import { getGeolocation, retrial, loadWeather } from '../components/weather.js';
-//import styles from '../../css/styles.css';
 
 export default class extends AbstractView {
     constructor() {
