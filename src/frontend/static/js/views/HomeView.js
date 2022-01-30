@@ -1,9 +1,9 @@
 'use strict';
 
 import AbstractView from './AbstractView.js';
-import { saveName, loadName, showAskName } from '../components/greeting.js';
-import { addHiddenClass, removeHiddenClass, showHomeBoard } from '../components/viewFunctions.js';
-//import { showToDoList, saveToDos } from '../components/todo.js';
+import { loadName, showAskName, onNameSubmit } from '../components/greeting.js';
+import { addHiddenClass, showHomeBoard } from '../components/viewFunctions.js';
+import { showToDoList, onToDoSubmit } from '../components/todo.js';
 
 export default class extends AbstractView {
     constructor() {
@@ -67,23 +67,16 @@ export default class extends AbstractView {
 
         const name = loadName();
 
-        const name_input = document.querySelector('#name-input');
+        const name_form = document.querySelector('#name-form');
         const home = document.querySelector('#home-board');
         const name_panel = document.querySelector('#get-name');
 
-        function onNameSubmit(event){
-            event.preventDefault();
-
-            saveName(name_input.value);
-            removeHiddenClass(home);
-            addHiddenClass(name_panel);
-
-           showHomeBoard(clock, date, greeting);
-        }
-
         if (name === null) {
             // localStorage에 저장된 name이 존재하지 않을 때
-            name_form.addEventListener('submit',onNameSubmit);
+
+            name_form.addEventListener('submit',(event)=>{
+                onNameSubmit(event, name_form, home, name_panel, clock, date, greeting);
+            });
             addHiddenClass(home);
             showAskName(name_panel);
         }
@@ -106,69 +99,23 @@ export default class extends AbstractView {
 
         let toDoList = [];
 
-        todo_panel.addEventListener('submit', onToDoSubmit);
-        add.addEventListener('click', onToDoSubmit);
+         todo_panel.addEventListener('submit',(event)=>{
+             onToDoSubmit(event, toDoList, todo_panel, schedule);
+         });
+         add.addEventListener('click',(event)=>{
+            onToDoSubmit(event, toDoList, todo_panel, schedule);
+         });
 
-        function onToDoSubmit(event) {
-            event.preventDefault();
-            const input = todo_panel.querySelector('input');
-            const newSchedule = input.value;
-            console.log(newSchedule);
+         const savedToDoList = localStorage.getItem(TODO);
 
-            if (newSchedule !== "") {
-                input.value = "";
-
-                const newScheduleObj = {
-                    text: newSchedule,
-                    id: Date.now(),
-                    isDone: false
-                };
-
-                toDoList.push(newScheduleObj);
-                showToDoList(newScheduleObj);
-                saveToDos();
-                console.log(toDoList);
-            }
-
-            input.focus();
-
-        }
-
-        function saveToDos() {
-            localStorage.setItem(TODO, JSON.stringify(toDoList));
-        }
-
-        function deleteToDo(event) {
-            const li = event.target.parentElement;
-            li.remove();
-            toDoList = toDoList.filter(toDo => toDo.id !== parseInt(li.id));
-            saveToDos();
-        }
-
-        function showToDoList(newScheduleObj) {
-            const li = document.createElement('li');
-            const span = document.createElement('span');
-            const delete_btn = document.createElement('button');
-
-            li.id = newScheduleObj.id;
-            delete_btn.innerText = "❌";
-            span.innerText = newScheduleObj.text;
-
-            delete_btn.addEventListener('click', deleteToDo);
-
-            li.appendChild(span);
-            li.appendChild(delete_btn);
-            schedule.appendChild(li);
-        }
-
-        const savedToDoList = localStorage.getItem(TODO);
-
-        if (savedToDoList !== null) {
-            const parsedToDos = JSON.parse(savedToDoList);
-            toDoList = parsedToDos;
-            toDoList.forEach(showToDoList);
-        }
-
+         if(savedToDoList!==null){
+             const parsedToDoList = JSON.parse(savedToDoList);
+             toDoList = parsedToDoList;
+             parsedToDoList.forEach((todo)=>{
+                 showToDoList(todo, toDoList, schedule);
+             });
+         }
+       
         ////////////////////////////////
         /**
          * 날씨 정보를 불러오는 코드들

@@ -1,5 +1,7 @@
 'use strict';
 
+import { addHiddenClass, removeHiddenClass, showHomeBoard } from "./viewFunctions.js";
+
 const USER_NAME = "username";
 const CLASS_HIDDEN = "hidden";
 
@@ -48,4 +50,17 @@ function showGreeting(greeting){
     }, 1000);
 }
 
-export { showGreeting, saveName, loadName, showAskName };
+function onNameSubmit(event, name_form, home, name_panel, clock, date, greeting){
+    event.preventDefault();
+
+    const name_input = name_form.querySelector('input');
+
+    saveName(name_input.value);
+    removeHiddenClass(home);
+    addHiddenClass(name_panel);
+
+   showHomeBoard(clock, date, greeting);
+}
+
+
+export { showGreeting, loadName, showAskName, onNameSubmit };

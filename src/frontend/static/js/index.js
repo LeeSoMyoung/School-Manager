@@ -9,41 +9,41 @@ import EnrollmentView from './views/EnrollmentView.js';
 import MonthlyView from './views/MonthlyView.js';
 import WeeklyView from './views/WeeklyView.js';
 
-const pathToRegex = (path)=>new RegExp("^"+path.replace(/\//g, "\\/").replace(/:\w+/g));
+const pathToRegex = (path) => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g));
 
-const navigateTo=(url)=>{
-    history.pushState(null,null,url);
+const navigateTo = (url) => {
+    history.pushState(null, null, url);
     router();
 }
 
-const router = async ()=>{
-    const routes=[
-        {path:"/", view:HomeView},
-        {path:"/calendar", view:CalendarView},
-        {path:"/login",view:LogInView},
-        {path:"/enrollment", view:EnrollmentView},
-        {path:"/credit", view:CreditView},
-        {path:"/calendar/weekly", view:WeeklyView},
-        {path:"/calendar/monthly", view:MonthlyView}
+const router = async () => {
+    const routes = [
+        { path: "/", view: HomeView },
+        { path: "/calendar", view: CalendarView },
+        { path: "/login", view: LogInView },
+        { path: "/enrollment", view: EnrollmentView },
+        { path: "/credit", view: CreditView },
+        { path: "/calendar/weekly", view: WeeklyView },
+        { path: "/calendar/monthly", view: MonthlyView }
     ];
 
-    const pathList = routes.map(route=>{
+    const pathList = routes.map(route => {
         return {
-            route:route,
-            isMatch: location.pathname===route.path
+            route: route,
+            isMatch: location.pathname === route.path
         };
     });
 
-    let matchedPath = pathList.find(path=>path.isMatch);
+    let matchedPath = pathList.find(path => path.isMatch);
 
-    if(!matchedPath){
+    if (!matchedPath) {
         // 만약 맞는 location이 존재하지 않는다면
         matchedPath = {
-            route:{
-                path:location.pathname,
-                view:NotFoundView // notFound view를 통해 존재하지 않는 페이지라는 것을 알림
+            route: {
+                path: location.pathname,
+                view: NotFoundView // notFound view를 통해 존재하지 않는 페이지라는 것을 알림
             },
-            isMatch:true
+            isMatch: true
         };
     }
 
@@ -51,7 +51,7 @@ const router = async ()=>{
 
     const app = document.querySelector('#app');
 
-    app.innerHTML=await view.getHtml();
+    app.innerHTML = await view.getHtml();
 
     view.attachEvent();
 
@@ -59,18 +59,20 @@ const router = async ()=>{
 
 }
 
-window.addEventListener('popstate',router);
+window.addEventListener('popstate', router);
 
-document.addEventListener('DOMContentLoaded',()=>{
-    document.body.addEventListener('click',(event)=>{
-        if(event.target.matches('[data-link]')){
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('click', (event) => {
+        if (event.target.matches('[data-link]')) {
             event.preventDefault();
             navigateTo(event.target.href);
         }
-        else if(event.target.matches('[data-img]')){
+        else if (event.target.matches('[data-img]')) {
             event.preventDefault();
             navigateTo(event.target.attributes.href.nodeValue);
         }
     });
     router();
 });
+
+export { navigateTo, router };
