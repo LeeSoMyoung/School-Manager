@@ -35,6 +35,6 @@
     font-size:20px;
 }
 
-  #weather-item,#weather-error{
+#weather-item,#weather-error{
   display:none;
 }

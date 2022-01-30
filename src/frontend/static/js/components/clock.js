@@ -9,18 +9,17 @@ function dayConvert(day){
 function getClock(clock){
     // 현재 시각을 얻는 함수
     const now = new Date();
-    const min = now.getMinutes();
-    const hour = now.getHours();
-    const sec = now.getSeconds();
-    
-    clock.innerText=`${hour}: ${min}: ${sec}`;
+    const min = now.getMinutes().toString().padStart(2,'0');
+    const hour = now.getHours().toString().padStart(2,'0');
+
+    clock.innerText=`${hour}: ${min}`;
 }
 
 function getToday(date_panel){
     const now = new Date();
-    const month = now.getMonth()+1;
+    const month = (now.getMonth()+1).toString().padStart(2,'0');
     const day = dayConvert(now.getDay());
-    const date = now.getDate();
+    const date = now.getDate().toString().padStart(2,'0');
     
     date_panel.innerText = `${month}. ${date} ${day}`;
 }

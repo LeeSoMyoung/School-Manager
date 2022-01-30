@@ -4,7 +4,6 @@ import AbstractView from './AbstractView.js';
 import { saveName, loadName, showAskName } from '../components/greeting.js';
 import { addHiddenClass, removeHiddenClass, showHomeBoard } from '../components/viewFunctions.js';
 //import { showToDoList, saveToDos } from '../components/todo.js';
-//import { getGeolocation, retrial, loadWeather } from '../components/weather.js';
 
 export default class extends AbstractView {
     constructor() {
@@ -182,6 +181,10 @@ export default class extends AbstractView {
 
         function paintError() {
             weather_error.style.display = "block";
+        }
+
+        function paintWeather(){
+
         }
 
     }

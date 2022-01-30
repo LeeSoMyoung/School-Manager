@@ -1,19 +1,19 @@
 'use strict';
 
-function openLeftSidebar(leftSidebar){
-    
-}
-
-function closeLeftSidebar(leftSidebar){
-    
-}
-
-function openRightSidebar(rightSidebar){
+function openLeftSidebar(leftSidebar) {
 
 }
 
-function closeRightSidebar(rightSidebar){
+function closeLeftSidebar(leftSidebar) {
 
 }
 
-export {openLeftSidebar, closeLeftSidebar, openRightSidebar, closeRightSidebar};
+function openRightSidebar(rightSidebar) {
+
+}
+
+function closeRightSidebar(rightSidebar) {
+
+}
+
+export { openLeftSidebar, closeLeftSidebar, openRightSidebar, closeRightSidebar };
