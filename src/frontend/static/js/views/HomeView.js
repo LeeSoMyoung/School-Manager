@@ -1,9 +1,8 @@
 'use strict';
 
 import AbstractView from './AbstractView.js';
-import showClock from '../components/clock.js';
-import { showGreeting, saveName, loadName, showAskName } from '../components/greeting.js';
-import { addHiddenClass, removeHiddenClass } from '../components/viewFunctions.js';
+import { saveName, loadName, showAskName } from '../components/greeting.js';
+import { addHiddenClass, removeHiddenClass, showHomeBoard } from '../components/viewFunctions.js';
 //import { showToDoList, saveToDos } from '../components/todo.js';
 //import { getGeolocation, retrial, loadWeather } from '../components/weather.js';
 
@@ -69,33 +68,30 @@ export default class extends AbstractView {
 
         const name = loadName();
 
+        const name_input = document.querySelector('#name-input');
+        const home = document.querySelector('#home-board');
+        const name_panel = document.querySelector('#get-name');
+
         function onNameSubmit(event){
             event.preventDefault();
-            const name_input = document.querySelector('#name-input');
-            const home = document.querySelector('#home-board');
-            const name_panel = document.querySelector('#get-name');
 
             saveName(name_input.value);
             removeHiddenClass(home);
             addHiddenClass(name_panel);
 
-            showClock(clock, date);
-            showGreeting(greeting);
+           showHomeBoard(clock, date, greeting);
         }
 
         if (name === null) {
-            const name_panel = document.querySelector('#get-name');
-            const home = document.querySelector('#home-board');
-            const name_form = name_panel.querySelector('form');
-
+            // localStorage에 저장된 name이 존재하지 않을 때
             name_form.addEventListener('submit',onNameSubmit);
             addHiddenClass(home);
             showAskName(name_panel);
         }
 
         else {
-            showClock(clock, date);
-            showGreeting(greeting);
+            // localStorage에 저장된 name이 존재할 때
+            showHomeBoard(clock, date, greeting);
         }
 
         ////////////////////////////////////////////////////
