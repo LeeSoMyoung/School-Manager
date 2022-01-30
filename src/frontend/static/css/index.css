@@ -1,4 +1,4 @@
-.hide{
+.hidden{
     display: none;
 }
 
@@ -81,4 +81,17 @@ body {
     cursor: pointer;
   }
 
- 
+  #monthly-calendar-container{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    height: 100%;
+  }
+
+  .day{
+
+  }
+
+  .weekend{
+    
+  }

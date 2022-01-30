@@ -11,4 +11,9 @@ export default class extends AbstractView{
             <h1>주간 일정표</h1>
         `;
     }
+
+    attachEvent(){
+        
+    }
+
 }

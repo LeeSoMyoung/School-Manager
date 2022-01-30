@@ -9,7 +9,7 @@ const logger = require('morgan');
 const {generateAccessToken, authenticationToken} = require('./src/backend/api/token');
 const jwt = require('jsonwebtoken');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT||8081;
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -38,8 +38,8 @@ app.get('/',authenticationToken,(req,res)=>{
     res.json({"현재 유저의 id":req.user.id});
 });
 
-app.listen(PORT||8081, ()=>{
-    console.log(`Server running on http://localhost:${PORT||8081}`);
+app.listen(PORT, ()=>{
+    console.log(`Server running on http://localhost:${PORT}`);
 });
 
 module.exports=app;

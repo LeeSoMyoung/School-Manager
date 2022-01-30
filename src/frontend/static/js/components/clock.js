@@ -25,4 +25,12 @@ function getToday(date_panel){
     date_panel.innerText = `${month}. ${date} ${day}`;
 }
 
-export {getClock, getToday};
+export default function showClock(clock, date_panel){
+    getClock(clock);
+    getToday(date_panel);
+
+    setInterval(()=>{
+        getClock(clock);
+        getToday(date_panel);
+    }, 1000);
+}

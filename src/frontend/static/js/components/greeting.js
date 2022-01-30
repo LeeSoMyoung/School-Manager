@@ -1,6 +1,7 @@
 'use strict';
 
 const USER_NAME = "username";
+const CLASS_HIDDEN = "hidden";
 
 function loadName() {
     const name = localStorage.getItem(USER_NAME);
@@ -12,20 +13,16 @@ function saveName(name) {
     localStorage.setItem(USER_NAME, name);
 }
 
-export default function getGreeting(greeting_panel) {
+function showAskName(name_panel) {
+    name_panel.classList.remove(CLASS_HIDDEN);
+}
+
+function getGreeting(greeting_panel) {
     const now = new Date();
     const hours = now.getHours();
     const name = loadName();
 
-    let greet;
-
-    if (name === null) {
-        // TODO : name이 null이면 이름 저장하는 화면 관련 코드 작성
-
-    }
-    else {
-        greet = name;
-    }
+    let greet = name;
 
     if (hours >= 6 && hours < 12) {
         greet += " Good Morning";
@@ -42,3 +39,13 @@ export default function getGreeting(greeting_panel) {
 
     greeting_panel.innerText = greet;
 }
+
+function showGreeting(greeting){
+    getGreeting(greeting);
+    
+    setInterval(()=>{
+        getGreeting(greeting);
+    }, 1000);
+}
+
+export { showGreeting, saveName, loadName, showAskName };

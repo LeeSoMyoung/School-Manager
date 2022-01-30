@@ -10,7 +10,12 @@ export default class extends AbstractView{
 
     async getHtml(){
         return `
-            <h1>일정 관리</h1>
+            <div id="calendar-container"></div>
         `;
     }
+
+    attachEvent(){
+        
+    }
+
 }

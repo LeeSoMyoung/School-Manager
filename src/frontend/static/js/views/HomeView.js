@@ -1,9 +1,10 @@
 'use strict';
 
 import AbstractView from './AbstractView.js';
-import { getClock, getToday } from '../components/clock.js';
-import getGreeting from '../components/greeting.js';
-import { showToDoList, saveToDos } from '../components/todo.js';
+import showClock from '../components/clock.js';
+import { showGreeting, saveName, loadName, showAskName } from '../components/greeting.js';
+import { addHiddenClass, removeHiddenClass } from '../components/viewFunctions.js';
+//import { showToDoList, saveToDos } from '../components/todo.js';
 //import { getGeolocation, retrial, loadWeather } from '../components/weather.js';
 
 export default class extends AbstractView {
@@ -14,7 +15,14 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-            <div class="home-board">
+            <div class = "hidden" id="get-name">
+                <h1>What is your name?</h1>
+                <form id="name-form">
+                    <input id="name-input" style="-ms-ime-mode:active" name="username" required type="text" minlength="2" maxlength="10"
+                    size="30" placeholder="Write name and press enter">
+                </form>
+            </div>
+            <div id="home-board">
                 <div class = "inner-item" id = "timeboard">
                     <h1 id="clock-panel">Clock</h1>
                     <h2 id="date-panel">Date</h2>
@@ -48,23 +56,47 @@ export default class extends AbstractView {
         `;
     }
 
-    attachEvent() {
+    attachEvent(){
+
+        /////////////////////////////
         /*
             현재 시간, 현재 날짜, 인삿말을 다루는 코드
         */
+
         const clock = document.querySelector('#clock-panel');
         const date = document.querySelector('#date-panel');
         const greeting = document.querySelector('#greeting-panel');
 
-        getClock(clock);
-        getToday(date);
-        getGreeting(greeting);
+        const name = loadName();
 
-        setInterval(() => {
-            getClock(clock);
-            getToday(date);
-            getGreeting(greeting);
-        }, 1000);
+        function onNameSubmit(event){
+            event.preventDefault();
+            const name_input = document.querySelector('#name-input');
+            const home = document.querySelector('#home-board');
+            const name_panel = document.querySelector('#get-name');
+
+            saveName(name_input.value);
+            removeHiddenClass(home);
+            addHiddenClass(name_panel);
+
+            showClock(clock, date);
+            showGreeting(greeting);
+        }
+
+        if (name === null) {
+            const name_panel = document.querySelector('#get-name');
+            const home = document.querySelector('#home-board');
+            const name_form = name_panel.querySelector('form');
+
+            name_form.addEventListener('submit',onNameSubmit);
+            addHiddenClass(home);
+            showAskName(name_panel);
+        }
+
+        else {
+            showClock(clock, date);
+            showGreeting(greeting);
+        }
 
         ////////////////////////////////////////////////////
         /** 
@@ -77,49 +109,70 @@ export default class extends AbstractView {
 
         const TODO = "toDos";
 
+        let toDoList = [];
+
         todo_panel.addEventListener('submit', onToDoSubmit);
         add.addEventListener('click', onToDoSubmit);
 
-        let toDoList = [];
-
-        todo_panel.addEventListener('submit',onToDoSubmit);
-        add.addEventListener('click',onToDoSubmit);
-
         function onToDoSubmit(event) {
             event.preventDefault();
-            console.log(toDoList);
-            const toDo = todo_panel.querySelector('input');
-            const newSchedule = toDo.value;
+            const input = todo_panel.querySelector('input');
+            const newSchedule = input.value;
+            console.log(newSchedule);
 
             if (newSchedule !== "") {
-                toDo.value = "";
-                const newToDoObj = {
+                input.value = "";
+
+                const newScheduleObj = {
                     text: newSchedule,
                     id: Date.now(),
                     isDone: false
-                }
-                toDoList.push(newToDoObj);
-                showToDoList(newToDoObj, schedule, deleteToDo);
-                saveToDos(toDoList);
+                };
+
+                toDoList.push(newScheduleObj);
+                showToDoList(newScheduleObj);
+                saveToDos();
+                console.log(toDoList);
             }
-            toDo.focus();
+
+            input.focus();
+
         }
 
-        function deleteToDo(event){
+        function saveToDos() {
+            localStorage.setItem(TODO, JSON.stringify(toDoList));
+        }
+
+        function deleteToDo(event) {
             const li = event.target.parentElement;
             li.remove();
-            toDoList = toDoList.filter((todo)=>todo.id!==parseInt(li.id));
-            saveToDos(toDoList);
+            toDoList = toDoList.filter(toDo => toDo.id !== parseInt(li.id));
+            saveToDos();
+        }
+
+        function showToDoList(newScheduleObj) {
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            const delete_btn = document.createElement('button');
+
+            li.id = newScheduleObj.id;
+            delete_btn.innerText = "❌";
+            span.innerText = newScheduleObj.text;
+
+            delete_btn.addEventListener('click', deleteToDo);
+
+            li.appendChild(span);
+            li.appendChild(delete_btn);
+            schedule.appendChild(li);
         }
 
         const savedToDoList = localStorage.getItem(TODO);
 
-        if(savedToDoList!==null){
+        if (savedToDoList !== null) {
             const parsedToDos = JSON.parse(savedToDoList);
             toDoList = parsedToDos;
-            toDoList.forEach(todo=>showToDoList(todo, schedule, deleteToDo));
+            toDoList.forEach(showToDoList);
         }
-
 
         ////////////////////////////////
         /**

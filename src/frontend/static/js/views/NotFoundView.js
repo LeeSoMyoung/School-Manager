@@ -10,7 +10,8 @@ export default class extends AbstractView{
 
     async getHtml(){
         return `
-            <h1>존재하지 않는 화면입니다.</h1>
+            <h1>존재하지 않는 경로입니다.</h1>
+            <h2>주소를 다시 확인해주세요.</h2>
         `;
     }
 }
