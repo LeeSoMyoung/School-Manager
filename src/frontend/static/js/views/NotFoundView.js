@@ -1,15 +1,15 @@
 'use strict';
 
 import AbstractView from './AbstractView.js';
-import {router, navigateTo} from '../index.js';
+import { navigateTo } from '../index.js';
 
-export default class extends AbstractView{
-    constructor(){
+export default class extends AbstractView {
+    constructor() {
         super();
         this.setTitle('존재하지 않는 페이지입니다.');
     }
 
-    async getHtml(){
+    async getHtml() {
         return `
             <h1>존재하지 않는 경로입니다.</h1>
             <h2>주소를 다시 확인해주세요.</h2>
@@ -20,22 +20,22 @@ export default class extends AbstractView{
         `;
     }
 
-    attachEvent(){
+    attachEvent() {
         const goHomeButton = document.querySelector('#go-home');
         const goPreviousButton = document.querySelector('#go-previous');
 
-        function onHomeButtonClicked(event){
+        function onHomeButtonClicked(event) {
             event.preventDefault();
             navigateTo('http://localhost:3000');
         }
 
-        function onPreviousButtonClicked(event){
+        function onPreviousButtonClicked(event) {
             event.preventDefault();
             history.back();
         }
 
-        goHomeButton.addEventListener('click',onHomeButtonClicked);
-        goPreviousButton.addEventListener('click',onPreviousButtonClicked);
+        goHomeButton.addEventListener('click', onHomeButtonClicked);
+        goPreviousButton.addEventListener('click', onPreviousButtonClicked);
     }
 
 }

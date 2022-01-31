@@ -69,6 +69,7 @@ function saveWeather(weatherInfo) {
 
 function loadWeather(paintWeather, paintError) {
     const current_weather = JSON.parse(localStorage.getItem(WEATHER));
+    console.log(WEATHER_API_KEY);
 
     if (current_weather !== null) {
         // 현재 날씨가 존재하면

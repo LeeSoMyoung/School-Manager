@@ -1,14 +1,15 @@
 'use strict';
 
 import AbstractView from "./AbstractView.js";
+import { showSidebars, hideSidebars } from '../controller/sidebars.js';
 
-export default class extends AbstractView{
-    constructor(){
+export default class extends AbstractView {
+    constructor() {
         super();
         this.setTitle('로그인');
     }
 
-    async getHtml(){
+    async getHtml() {
         return `
         <div class="container" align="center">
         <form class="form" id="login">
@@ -22,7 +23,7 @@ export default class extends AbstractView{
                 <input type="password" class="form__input" autofocus placeholder="트리니티 비밀번호">
                 <div class="form__input-error-message"></div>
             </div>
-            <button class="form__button" type="submit">로그인</button>
+            <button class="form__button" type="submit" id="login-btn">로그인</button>
             <p>
                 <h3>트리니티 아이디와 비밀번호는</h3>
                 <h3>서비스를 위한 용도로만 사용됩니다.</h3>
@@ -30,5 +31,12 @@ export default class extends AbstractView{
         </form>
         </div>
         `;
+    }
+
+    attachEvent() {
+        hideSidebars();
+
+        const login_btn = document.querySelector('#login-btn');
+        
     }
 }

@@ -1,9 +1,10 @@
 'use strict';
 
 import AbstractView from './AbstractView.js';
-import { loadName, showAskName, onNameSubmit } from '../components/greeting.js';
-import { addHiddenClass, showHomeBoard } from '../components/viewFunctions.js';
-import { showToDoList, onToDoSubmit } from '../components/todo.js';
+import { loadName, showAskName, onNameSubmit } from '../controller/greeting.js';
+import { addHiddenClass, showHomeBoard } from '../controller/viewFunctions.js';
+import { showToDoList, onToDoSubmit } from '../controller/todo.js';
+import { getGeolocation, retrial, loadWeather } from '../controller/weather.js';
 
 export default class extends AbstractView {
     constructor() {
@@ -134,5 +135,6 @@ export default class extends AbstractView {
 
         }
 
+        loadWeather(paintWeather, paintError);
     }
 }

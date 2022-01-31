@@ -1,7 +1,7 @@
 'use strict';
 
 import AbstractView from "./AbstractView.js";
-import { showMonthlyCalendar } from "../components/monthlyCalendar.js";
+import { showMonthlyCalendar } from "../controller/monthlyCalendar.js";
 
 export default class extends AbstractView{
     constructor(){
