@@ -26,7 +26,7 @@ export default class extends AbstractView {
 
         function onHomeButtonClicked(event) {
             event.preventDefault();
-            navigateTo('http://localhost:3000');
+            navigateTo(location.origin);
         }
 
         function onPreviousButtonClicked(event) {
