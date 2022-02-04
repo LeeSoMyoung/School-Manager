@@ -1,10 +1,10 @@
 'use strict';
 
 import AbstractView from './AbstractView.js';
-import { loadName, showAskName, onNameSubmit } from '../controller/greeting.js';
-import { addHiddenClass, showHomeBoard } from '../controller/viewFunctions.js';
-import { showToDoList, onToDoSubmit } from '../controller/todo.js';
-import { getGeolocation, retrial, loadWeather } from '../controller/weather.js';
+import { loadName, showAskName, onNameSubmit } from '../models/greeting.js';
+import { addHiddenClass, showHomeBoard } from '../models/viewFunctions.js';
+import { showToDoList, onToDoSubmit } from '../models/todo.js';
+import { getGeolocation, retrial, loadWeather } from '../models/weather.js';
 
 export default class extends AbstractView {
     constructor() {

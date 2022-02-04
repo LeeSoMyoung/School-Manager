@@ -1,6 +1,6 @@
 'use strict';
 
-import { addHiddenClass, removeHiddenClass } from './viewFunctions.js';
+import { addHiddenClass, removeHiddenClass } from '../models/viewFunctions.js';
 
 const rightSidebar = document.querySelector('#notification');
 const leftSidebar = document.querySelector('nav');

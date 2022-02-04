@@ -1,7 +1,7 @@
 'use strict';
 
 import AbstractView from './AbstractView.js';
-import { navigateTo } from '../index.js';
+import { onHomeButtonClicked, onPreviousButtonClicked } from '../controller/NotFoundController.js';
 
 export default class extends AbstractView {
     constructor() {
@@ -23,16 +23,6 @@ export default class extends AbstractView {
     attachEvent() {
         const goHomeButton = document.querySelector('#go-home');
         const goPreviousButton = document.querySelector('#go-previous');
-
-        function onHomeButtonClicked(event) {
-            event.preventDefault();
-            navigateTo(location.origin);
-        }
-
-        function onPreviousButtonClicked(event) {
-            event.preventDefault();
-            history.back();
-        }
 
         goHomeButton.addEventListener('click', onHomeButtonClicked);
         goPreviousButton.addEventListener('click', onPreviousButtonClicked);
