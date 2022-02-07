@@ -8,6 +8,7 @@ const path = require('path');
 const logger = require('morgan');
 const { generateAccessToken, authenticationToken } = require('./src/backend/api/token');
 const jwt = require('jsonwebtoken');
+const mysql = require('mysql');
 
 const PORT = process.env.PORT || 8081;
 
@@ -36,6 +37,23 @@ app.get('/login', authenticationToken, (req, res) => {
 
 app.get('/', authenticationToken, (req, res) => {
     res.json({ "현재 유저의 id": req.user.id });
+});
+
+const db = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DATABASE
+});
+
+db.connect((error)=>{
+    if(error){
+        // DB를 연결하지 못했다면 연결하지 못한 원인을 띄운다.
+        console.log(error);
+    }
+    else{
+        console.log('MySQL is Connected...');
+    }
 });
 
 app.listen(PORT, () => {
