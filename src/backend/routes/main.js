@@ -7,9 +7,8 @@ const router = express.Router();
 
 const weatherLib = require('./libs/weather.js');
 
-router.get('/', (req, res) => {
-    const weatherInfo = weatherLib.getGeolocation();
-    console.log('weatherInfo', weatherInfo);
-});
+const userMiddleware = require('../middlewares/users.js');
+
+router.get('/', userMiddleware.isLoggedIn);
 
 module.exports = router;

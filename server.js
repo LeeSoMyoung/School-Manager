@@ -7,8 +7,6 @@ const app = express();
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-const { generateAccessToken, authenticationToken } = require('./src/backend/routes/token');
-const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT || 8081;
 
@@ -23,10 +21,9 @@ app.use(cookieParser());
 // 사용한 static 디렉터리
 app.use('/static', express.static(path.resolve(__dirname, 'src', 'frontend', 'static')));
 app.use('/backend', express.static(path.resolve(__dirname, 'src', 'backend')));
-app.use('/',express.static(path.resolve(__dirname,'src','backend','router')));
 
 // 라우터
-app.use('/logIn', logInRouter);
+app.use('/login', logInRouter);
 app.use('/', mainRouter);
 
 app.get('/*', (req, res) => {
